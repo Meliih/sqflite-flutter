@@ -28,10 +28,12 @@ class DbHelper {
     });
   }
 
-  Future<List> getProducts() async {
+  Future<List<Product>> getProducts() async {
     Database db = await this.db;
     var result = await db.query("Products");
-    return result;
+    return List.generate(result.length, (i) {
+      return Product.fromObject(result[i]);
+    });
   }
 
   Future<int> insert(Product product) async {
